@@ -54,6 +54,7 @@ class OrganizacaoController extends Controller
     }
     public function edit($id)
     {
+
         $registro = Organizacao::find($id);
         return view('organizacaos.edit', compact('registro'));
     }

@@ -3,6 +3,7 @@
 @section('nome', 'Organizacaos')
 
 @section('conteudo')
+
 <div class="container">
     <h3 class="center">Organizações</h3>
     <div class="row">
@@ -24,32 +25,33 @@
 
         </div>
     </div>
-</div>
-
-<div class="modal" role="dialog" id="dlgOrganizacaos">
-    <div class="modal-dialog" role="document" >
-        <div class="modal-content">
-            <form class="form-horizontal" id="formOrganizacao">
-                <div class="modal-header">
-                    <h5 class="modal-title">Nova Organização</h5>
-                </div>
-                <div class="modal-body">
-
-                    <input type="hidden" id="id" class="form-control">
-                    <div class="form-group">
-                        <label for="nomeOrganizacao" class="control-label">Nome da Organização</label>
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="nomeOrganizacao" placeholder="Nome da Organização">
-                        </div>
+    <div class="modal" role="dialog" id="dlgOrganizacaos">
+        <div class="modal-dialog" role="document" >
+            <div class="modal-content">
+                <form class="form-horizontal" id="formOrganizacao">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Nova Organização</h5>
                     </div>
-                <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary">Salvar</button>
-                    <button type="cancel" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                </div>
-            </form>
+                    <div class="modal-body">
+
+                        <input type="hidden" id="id" class="form-control">
+                        <div class="form-group">
+                            <label for="nomeOrganizacao" class="control-label">Nome da Organização</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="nomeOrganizacao" placeholder="Nome da Organização">
+                            </div>
+                        </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary" id="salvar">Salvar</button>
+                        <button type="cancel" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
+
 </div>
+
 
 @endsection
 
@@ -67,8 +69,9 @@
             "<td>" + p.id + "</td>" +
             "<td>" + p.nome + "</td>" +
             "<td>" +
+              '<button style="background-color: green" class="btn btn-success" onClick="show(' + p.id + ')"> Exibir </button> ' +
               '<button class="btn btn-sm btn-primary" onClick="editar(' + p.id + ')"> Editar </button> ' +
-              '<button class="btn btn-danger" onClick="remover(' + p.id + ')"> Apagar </button> ' +
+              '<button style="background-color: red" class="btn btn-danger" onClick="remover(' + p.id + ')"> Apagar </button> ' +
             "</td>" +
             "</tr>";
         return linha;
@@ -79,6 +82,16 @@
             console.log(organizacaos);
             $('#id').val(organizacaos.id);
             $('#nomeOrganizacao').val(organizacaos.nome);
+            $('#dlgOrganizacaos').modal('show');
+        });
+    }
+
+    function show(id) {
+        $.getJSON('/api/organizacaos/'+id, function(organizacaos) {
+            console.log(organizacaos);
+            $('#id').val(organizacaos.id);
+            $('#nomeOrganizacao').val(organizacaos.nome).attr("disabled", true);
+            $('#salvar').hide();
             $('#dlgOrganizacaos').modal('show');
         });
     }
