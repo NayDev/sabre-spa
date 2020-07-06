@@ -17,13 +17,12 @@ Route::get('/clear-cache', function() {
     return 'Application cache cleared';
 });
 
-<<<<<<< HEAD
 Route::get('/organizacaos', ['as' => 'organizacaos', 'uses' =>'OrganizacaoController@index']);
-=======
+
 
 Route::get('/',['as'=>'site.home','uses'=>'HomeController@index']);
 
->>>>>>> 7c48d1c3a032681549e2eaea091a66d5f2773c21
+
 Route::get('/organizacaos', ['as' => 'organizacaos', 'uses' =>'OrganizacaoController@indexView']);
 Route::get('/organizacaos/adicionar', ['as'=>'organizacaos.adicionar', 'uses'=>'OrganizacaoController@adicionar']);
 Route::post('/organizacaos/salvar', ['as' => 'organizacaos.salvar', 'uses' =>'OrganizacaoController@salvar']);

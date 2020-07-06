@@ -4,7 +4,8 @@
 
 @section('conteudo')
 
-<div class="card-header" wfd-id="13">
+<div class="card-header" wfd-id="10">
+
     <h2 class="text-uppercase mb-0">Organizações</h2>
 </div>
 <div class="card-body">
@@ -25,9 +26,13 @@
         </table>
     </div>
 </div>
+
 <div class="card-footer">
     <button class="btn sm btn-primary" role="button" onClick="novaOrganizacao()">Nova Organização</button>
 </div>
+<br />
+<br />
+<br />
 <div class="modal" role="dialog" id="dlgOrganizacaos" style="top:10%">
     <div class="modal-dialog" role="document" >
         <div class="modal-content">
@@ -60,28 +65,27 @@
 <script type="text/javascript">
 
 
-    function novaOrganizacao() {
+    function novaOrganizacao() { // Função para uma nova Organização
         $('#id').val('');
         $('#nomeOrganizacao').val('').prop("disabled", false);
         $('#salvar').show();
         $('#dlgOrganizacaos').show();
     }
-    function montarLinha(p) {
+    function montarLinha(p) { //Função para montar a linha após salvar os dados para mostrar na tela
         var linha = "<tr>" +
             "<td>" + p.id + "</td>" +
             "<td>" + p.nome + "</td>" +
             "<td>" +
               '<button style="background-color: green" class="btn btn-success" onClick="show(' + p.id + ')"> Exibir </button> ' +
-              '<button class="btn btn-sm btn-primary" onClick="editar(' + p.id + ')"> Editar </button> ' +
+              '<button style="background-color: blue" class="btn btn-primary" onClick="editar(' + p.id + ')"> Editar </button> ' +
               '<button style="background-color: red" class="btn btn-danger" onClick="remover(' + p.id + ')"> Apagar </button> ' +
             "</td>" +
             "</tr>";
         return linha;
     }
 
-    function editar(id) {
+    function editar(id) { // Função para editar o valor
         $.getJSON('/api/organizacaos/'+id, function(organizacaos) {
-            console.log(organizacaos);
             $('#id').val(organizacaos.id);
             $('#nomeOrganizacao').val(organizacaos.nome).prop("disabled", false);
             $('#salvar').show();
@@ -89,7 +93,7 @@
         });
     }
 
-    function show(id) {
+    function show(id) { //Função para exibir os valores salvos.
         $.getJSON('/api/organizacaos/'+id, function(organizacaos) {
             $('#id').val(organizacaos.id);
             $('#nomeOrganizacao').val(organizacaos.nome).attr("disabled", "disabled");
@@ -99,7 +103,7 @@
     }
 
 
-    function remover(id) {
+    function remover(id) { //Função que deleta o valor pelo seu id.
         $.ajax({
             type: "DELETE",
             url: "api/organizacaos/" + id,
@@ -119,7 +123,7 @@
     }
 
 
-    function carregarOrganizacaos() {
+    function carregarOrganizacaos() { //Função para carregar todos os dados.
         $.getJSON('/api/organizacaos', function(organizacaos) {
             for(i=0;i<organizacaos.length;i++) {
                 linha = montarLinha(organizacaos[i]);
@@ -128,7 +132,7 @@
         });
     }
 
-    function criarOrganizacao() {
+    function criarOrganizacao() { //função para criar um novo dado
         prod = {
             nome: $("#nomeOrganizacao").val()
         };
@@ -139,20 +143,20 @@
         });
     }
 
-    var apiUrl = "/api/servicos";
+    var apiUrl = "/api/servicos"; //Começo da função de pesquisar
     var nomeModulo = "Organizacao";
     $(document).on('keyup', '.listarRegistros', function () {
         var filtro=$(this).val();
         listarRegistros(filtro);
             alert(filtro);
     });
-    function listarRegistros(filtro){
+    function listarRegistros(filtro){ //Função que faz o pesquisar filtar os valores pelo nome.
         var nomeFuncao=arguments.callee.name;
         var datastring='';
         datastring += 'filtro='+filtro;
         datastring += '&funcao='+nomeFuncao;
-        datastring += '&model='+nomeModulo;//definido em default.php
-        console.log(datastring);
+        datastring += '&model='+nomeModulo;
+        //console.log(datastring);
         $.ajax({
             url: apiUrl,
             dataType: "json",
@@ -183,7 +187,7 @@
         });
     }
 
-    function salvarOrganizacao() {
+    function salvarOrganizacao() { //função para salvar no banco os valores digitados.
         prod = {
             id : $("#id").val(),
             nome: $("#nomeOrganizacao").val(),
@@ -209,7 +213,7 @@
             }
         });
     }
-    $(document).ready( function() {
+    $(document).ready( function() { //função SPA
         $("#formOrganizacao").on('submit', function(e){
             e.preventDefault();
             if($("#id").val() != '')
