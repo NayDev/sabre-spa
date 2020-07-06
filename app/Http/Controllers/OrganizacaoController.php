@@ -17,9 +17,11 @@ class OrganizacaoController extends Controller
 
     public function index()
     {
+
+
         $registros = Organizacao::all();
         return $registros->toJson();
-        //return view('admin.organizacaos.index',compact('registros'));
+        //return view('admin.organizacaos.index',compact('registros'));*/
     }
 
     public function adicionar()

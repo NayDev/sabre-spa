@@ -11,7 +11,9 @@
             <thead>
                 <tr>
                     <th>Id</th>
-                    <th>Nome</th>
+                    <th>Nome
+                        <input name="texto" id="texto" type="text" class="form-control-sm listarRegistros" >
+                    </th>
                     <th>Ações</th>
                 </tr>
             </thead>
@@ -135,6 +137,50 @@
             organizacao = JSON.parse(prod);
             linha = montarLinha(organizacao);
             $('#tabelaOrganizacaos>tbody').append(linha);
+        });
+    }
+
+    var apiUrl = "/api/servicos";
+    var nomeModulo = "Organizacao";
+    $(document).on('keyup', '.listarRegistros', function () {
+        var filtro=$(this).val();
+        listarRegistros(filtro);
+            alert(filtro);
+    });
+    function listarRegistros(filtro){
+        var nomeFuncao=arguments.callee.name;
+        var datastring='';
+        datastring += 'filtro='+filtro;
+        datastring += '&funcao='+nomeFuncao;
+        datastring += '&model='+nomeModulo;//definido em default.php
+        console.log(datastring);
+        $.ajax({
+            url: apiUrl,
+            dataType: "json",
+            type: "POST",
+            data: datastring,
+            async: true,
+            success: function(pacote) {
+                // $("#loading_list").hide();
+                $('#tabelaOrganizacaos').find("tr:gt(0)").remove();
+                $.each(pacote.data, function(contador,registro) {
+                    linhaNova='<tr style="background-color: rgba(0, 0, 0, 0.05)" id="id'+registro.id+'">';
+                        linhaNova+='<td id="id">'+registro.id+'</td>';
+                    linhaNova+='<td id="cell-nome">'+registro.nome+'</td>';
+                    linhaNova+= "<td>" +
+                        '<button style="background-color: green" class="btn btn-success" onClick="show(' + registro.id + ')"> Exibir </button> ' +
+                        '<button class="btn btn-sm btn-primary" onClick="editar(' + registro.id + ')"> Editar </button> ' +
+                        '<button style="background-color: red" class="btn btn-danger" onClick="remover(' + registro.id + ')"> Apagar </button> ' +
+                        "</td>" +
+                        "</tr>";
+                    //linhaNova+='<td style="display: inline-block;"><a class="btn btn" href="/organizacaos'+nomeModulo+'s/'+registro.id+'" style="background: green;">Exibir</a><a class="btn" href=href="/organizacaos'+nomeModulo+'s/'+registro.id+'/edit" style="background: blue;">Editar</a></td>';
+                    $('#tabelaOrganizacaos tr:last').after(linhaNova);
+                });
+            console.log(JSON.stringify(pacote));
+            },
+            error: function(e) {
+                alert(e.status+':'+nomeFuncao);
+            }
         });
     }
 

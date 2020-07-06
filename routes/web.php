@@ -17,7 +17,7 @@ Route::get('/', function () {
     return view('home');
 });
 
-
+Route::get('/organizacaos', ['as' => 'organizacaos', 'uses' =>'OrganizacaoController@index']);
 Route::get('/organizacaos', ['as' => 'organizacaos', 'uses' =>'OrganizacaoController@indexView']);
 Route::get('/organizacaos/adicionar', ['as'=>'organizacaos.adicionar', 'uses'=>'OrganizacaoController@adicionar']);
 Route::post('/organizacaos/salvar', ['as' => 'organizacaos.salvar', 'uses' =>'OrganizacaoController@salvar']);
