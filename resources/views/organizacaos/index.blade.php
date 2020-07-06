@@ -33,17 +33,17 @@
                         <h5 class="modal-title">Nova Organização</h5>
                     </div>
                     <div class="modal-body">
-
                         <input type="hidden" id="id" class="form-control">
                         <div class="form-group">
-                            <label for="nomeOrganizacao" class="control-label">Nome da Organização</label>
+
+                            <label for="nomeOrganizacao" id="disable" class="control-label">Nome da Organização</label>
                             <div class="input-group">
                                 <input type="text" class="form-control" id="nomeOrganizacao" placeholder="Nome da Organização">
                             </div>
                         </div>
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-primary" id="salvar">Salvar</button>
-                        <button type="cancel" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                        <button type="cancel" class="btn btn-secondary"  id="enable" data-dismiss="modal">Fechar</button>
                     </div>
                 </form>
             </div>
@@ -61,7 +61,8 @@
 
     function novaOrganizacao() {
         $('#id').val('');
-        $('#nomeOrganizacao').val('');
+        $('#nomeOrganizacao').val('').prop("disabled", false);
+        $('#salvar').show();
         $('#dlgOrganizacaos').modal('show');
     }
     function montarLinha(p) {
@@ -81,16 +82,16 @@
         $.getJSON('/api/organizacaos/'+id, function(organizacaos) {
             console.log(organizacaos);
             $('#id').val(organizacaos.id);
-            $('#nomeOrganizacao').val(organizacaos.nome);
+            $('#nomeOrganizacao').val(organizacaos.nome).prop("disabled", false);
+            $('#salvar').show();
             $('#dlgOrganizacaos').modal('show');
         });
     }
 
     function show(id) {
         $.getJSON('/api/organizacaos/'+id, function(organizacaos) {
-            console.log(organizacaos);
             $('#id').val(organizacaos.id);
-            $('#nomeOrganizacao').val(organizacaos.nome).attr("disabled", true);
+            $('#nomeOrganizacao').val(organizacaos.nome).attr("disabled", "disabled");
             $('#salvar').hide();
             $('#dlgOrganizacaos').modal('show');
         });
