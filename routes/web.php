@@ -12,11 +12,13 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-Route::get('/', function () {
-    return view('home');
+Route::get('/clear-cache', function() {
+    $exitCode = Artisan::call('cache:clear');
+    return 'Application cache cleared';
 });
 
+
+Route::get('/',['as'=>'site.home','uses'=>'HomeController@index']);
 
 Route::get('/organizacaos', ['as' => 'organizacaos', 'uses' =>'OrganizacaoController@indexView']);
 Route::get('/organizacaos/adicionar', ['as'=>'organizacaos.adicionar', 'uses'=>'OrganizacaoController@adicionar']);
