@@ -1,8 +1,19 @@
-<!-- jQuery library -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+    <script src="{{ asset('js/app.js')}}" type="text/javascript"></script>
+    <script src=" {{ asset('sabre-tema/js/jquery-ui/jquery-ui.min.js') }}"></script>
+    <script>
+        $(".datepicker").datepicker({ dateFormat: 'dd/mm/yy' });
+        var credId={{(int)\Auth::id()}};
+    </script>
 
-<!-- Latest compiled JavaScript  -->
-<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
-</body>
+    @hasSection ('javascript')
+        @yield('javascript')       
+    @endif
+    </body>
 </html>

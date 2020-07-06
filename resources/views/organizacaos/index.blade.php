@@ -4,8 +4,10 @@
 
 @section('conteudo')
 
-<div class="container">
-    <h3 class="center">Organizações</h3>
+<div class="card-header" wfd-id="13">
+    <h2 class="text-uppercase mb-0">Organizações</h2>
+</div>
+<div class="card-body">
     <div class="row">
         <table table table-ordered table-hover id="tabelaOrganizacaos">
             <thead>
@@ -19,37 +21,34 @@
 
             </tbody>
         </table>
-
-        <div class="card-footer">
-            <button class="btn sm btn-primary" role="button" onClick="novaOrganizacao()">Nova Organização</button>
-
-        </div>
     </div>
-    <div class="modal" role="dialog" id="dlgOrganizacaos">
-        <div class="modal-dialog" role="document" >
-            <div class="modal-content">
-                <form class="form-horizontal" id="formOrganizacao">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Nova Organização</h5>
-                    </div>
-                    <div class="modal-body">
-                        <input type="hidden" id="id" class="form-control">
-                        <div class="form-group">
+</div>
+<div class="card-footer">
+    <button class="btn sm btn-primary" role="button" onClick="novaOrganizacao()">Nova Organização</button>
+</div>
+<div class="modal" role="dialog" id="dlgOrganizacaos" style="top:10%">
+    <div class="modal-dialog" role="document" >
+        <div class="modal-content">
+            <form class="form-horizontal" id="formOrganizacao">
+                <div class="modal-header">
+                    <h5 class="modal-title">Nova Organização</h5>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" id="id" class="form-control">
+                    <div class="form-group">
 
-                            <label for="nomeOrganizacao" id="disable" class="control-label">Nome da Organização</label>
-                            <div class="input-group">
-                                <input type="text" class="form-control" id="nomeOrganizacao" placeholder="Nome da Organização">
-                            </div>
+                        <label for="nomeOrganizacao" id="disable" class="control-label">Nome da Organização</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="nomeOrganizacao" placeholder="Nome da Organização">
                         </div>
-                    <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary" id="salvar">Salvar</button>
-                        <button type="cancel" class="btn btn-secondary"  id="enable" data-dismiss="modal">Fechar</button>
                     </div>
-                </form>
-            </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary" id="salvar">Salvar</button>
+                    <button type="cancel" class="btn btn-secondary"  id="enable" data-dismiss="modal">Fechar</button>
+                </div>
+            </form>
         </div>
     </div>
-
 </div>
 
 
@@ -63,7 +62,7 @@
         $('#id').val('');
         $('#nomeOrganizacao').val('').prop("disabled", false);
         $('#salvar').show();
-        $('#dlgOrganizacaos').modal('show');
+        $('#dlgOrganizacaos').show();
     }
     function montarLinha(p) {
         var linha = "<tr>" +
@@ -84,7 +83,7 @@
             $('#id').val(organizacaos.id);
             $('#nomeOrganizacao').val(organizacaos.nome).prop("disabled", false);
             $('#salvar').show();
-            $('#dlgOrganizacaos').modal('show');
+            $('#dlgOrganizacaos').show();
         });
     }
 
@@ -93,7 +92,7 @@
             $('#id').val(organizacaos.id);
             $('#nomeOrganizacao').val(organizacaos.nome).attr("disabled", "disabled");
             $('#salvar').hide();
-            $('#dlgOrganizacaos').modal('show');
+            $('#dlgOrganizacaos').show();
         });
     }
 
@@ -171,7 +170,7 @@
             salvarOrganizacao();
             else
             criarOrganizacao();
-            $("#dlgOrganizacaos").modal('hide');
+            $("#dlgOrganizacaos").hide();
         });
 
     });
