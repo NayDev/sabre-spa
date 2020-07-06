@@ -5,7 +5,6 @@
 @section('conteudo')
 
 <div class="card-header" wfd-id="10">
-
     <h2 class="text-uppercase mb-0">Organizações</h2>
 </div>
 <div class="card-body">
@@ -72,7 +71,7 @@
         $('#dlgOrganizacaos').show();
     }
     function montarLinha(p) { //Função para montar a linha após salvar os dados para mostrar na tela
-        var linha = "<tr>" +
+        var linha ='<tr style="background-color: rgba(0, 0, 0, 0.05)" id="id'+p.id+'">' +
             "<td>" + p.id + "</td>" +
             "<td>" + p.nome + "</td>" +
             "<td>" +
@@ -109,12 +108,7 @@
             url: "api/organizacaos/" + id,
             context: this,
             success: function() {
-                linhas = $("#tabelaOrganizacaos>tbody>tr");
-                e = linhas.filter( function(i, elemento) {
-                    return elemento.cells[0].textContent == id;
-                });
-                if (e)
-                    e.remove();
+                $('#id'+id).remove();
             },
             error: function(error) {
                 console.log(error);
@@ -148,8 +142,8 @@
     $(document).on('keyup', '.listarRegistros', function () {
         var filtro=$(this).val();
         listarRegistros(filtro);
-            alert(filtro);
     });
+
     function listarRegistros(filtro){ //Função que faz o pesquisar filtar os valores pelo nome.
         var nomeFuncao=arguments.callee.name;
         var datastring='';
@@ -164,19 +158,9 @@
             data: datastring,
             async: true,
             success: function(pacote) {
-                // $("#loading_list").hide();
                 $('#tabelaOrganizacaos').find("tr:gt(0)").remove();
                 $.each(pacote.data, function(contador,registro) {
-                    linhaNova='<tr style="background-color: rgba(0, 0, 0, 0.05)" id="id'+registro.id+'">';
-                        linhaNova+='<td id="id">'+registro.id+'</td>';
-                    linhaNova+='<td id="cell-nome">'+registro.nome+'</td>';
-                    linhaNova+= "<td>" +
-                        '<button style="background-color: green" class="btn btn-success" onClick="show(' + registro.id + ')"> Exibir </button> ' +
-                        '<button class="btn btn-sm btn-primary" onClick="editar(' + registro.id + ')"> Editar </button> ' +
-                        '<button style="background-color: red" class="btn btn-danger" onClick="remover(' + registro.id + ')"> Apagar </button> ' +
-                        "</td>" +
-                        "</tr>";
-                    //linhaNova+='<td style="display: inline-block;"><a class="btn btn" href="/organizacaos'+nomeModulo+'s/'+registro.id+'" style="background: green;">Exibir</a><a class="btn" href=href="/organizacaos'+nomeModulo+'s/'+registro.id+'/edit" style="background: blue;">Editar</a></td>';
+                    linhaNova = montarLinha(registro);
                     $('#tabelaOrganizacaos tr:last').after(linhaNova);
                 });
             console.log(JSON.stringify(pacote));
