@@ -72,8 +72,8 @@
     }
     function montarLinha(p) { //Função para montar a linha após salvar os dados para mostrar na tela
         var linha ='<tr style="background-color: rgba(0, 0, 0, 0.05)" id="id'+p.id+'">' +
-            "<td>" + p.id + "</td>" +
-            "<td>" + p.nome + "</td>" +
+            "<td >" + p.id + "</td>" +
+            "<td id='cell-nome'>" + p.nome + "</td>" +
             "<td>" +
               '<button style="background-color: green" class="btn btn-success" onClick="show(' + p.id + ')"> Exibir </button> ' +
               '<button style="background-color: blue" class="btn btn-primary" onClick="editar(' + p.id + ')"> Editar </button> ' +
@@ -182,15 +182,7 @@
             context: this,
             data: prod,
             success: function(data) {
-                prod = JSON.parse(data);
-                linhas = $("#tabelaOrganizacaos>tbody>tr");
-                e = linhas.filter( function(i, e) {
-                    return ( e.cells[0].textContent == prod.id );
-                });
-                if (e) {
-                    e[0].cells[0].textContent = prod.id;
-                    e[0].cells[1].textContent = prod.nome;
-                }
+                $('#id'+prod.id).find('#cell-nome').html(prod.nome);
             },
             error: function(error) {
                 console.log(error);
